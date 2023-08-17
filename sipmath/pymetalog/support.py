@@ -17,7 +17,8 @@ def MLprobs(x_old, step_len):
 
 
     if len(x.index) > 100:
-        y2 = np.linspace(step_len, 1 - step_len, ((1 - step_len) / step_len))
+        num = int(((1 - step_len) / step_len))
+        y2 = np.linspace(step_len, 1 - step_len, num)
 
         tailstep = step_len / 10
 
