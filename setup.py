@@ -9,7 +9,7 @@ setup(name='sipmath',
       author='Colin Smith, Isaac Faber',
       author_email='colin.smith.a@gmail.com',
       license='MIT',
-      packages=setup.find_packages(),
+      packages=['sipmath'],
       zip_safe=False,
       classifiers=[
             "Programming Language :: Python :: 3",
