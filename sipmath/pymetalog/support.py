@@ -9,37 +9,36 @@ def MLprobs(x_old, step_len):
     x.sort_values(by='x')
 
     x['probs'] = 0
-    for i in range(0,l):
-            if i == 0:
-                x.loc[i,'probs'] = .5/l
-            else:
-                x.loc[i, 'probs'] = x.loc[i-1, 'probs'] + 1/l
+    for i in range(0, l):
+        if i == 0:
+            x.loc[i,'probs'] = .5/l
+        else:
+            x.loc[i, 'probs'] = x.loc[i-1, 'probs'] + 1/l
 
-
+    df_x = None
     if len(x.index) > 100:
         num = int(((1 - step_len) / step_len))
         y2 = np.linspace(step_len, 1 - step_len, num)
 
         tailstep = step_len / 10
 
-        y1 = np.linspace(tailstep, (min(y2) - tailstep), ((min(y2) - tailstep) / tailstep))
+        y1 = np.linspace(tailstep, (min(y2) - tailstep), int(((min(y2) - tailstep) / tailstep)))
 
-        y3 = np.linspace((max(y2) + tailstep), (max(y2) + tailstep * 9), ((tailstep * 9) / tailstep))
+        y3 = np.linspace((max(y2) + tailstep), (max(y2) + tailstep * 9), int(((tailstep * 9) / tailstep)))
 
         y = np.hstack((y1, y2, y3))
 
         x_new = np.quantile(x_old, y)
 
-        df_x = {}
-
-        df_x['x'] = x_new
-
-        df_x['probs'] = y
+        df_x = {
+            'x': x_new,
+            'probs': y
+        }
 
     return df_x
 
 
-def pdfMetalog(a, y, t, bounds = [], boundedness = 'u'):
+def pdfMetalog(a, y, t, bounds=(), boundedness='u'):
     d = y * (1 - y)
     f = y - .5
     l = np.log(y / (1 - y))
